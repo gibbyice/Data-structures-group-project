@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Dictionary 
@@ -242,6 +246,47 @@ public class Dictionary
     	} else {
     		previous.setRight(null);
     	}
+    }
+    
+    /**
+     * loads my dic ;)
+     */
+    public void loadDic() {
+		System.out.println("Loading dic...");
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        Scanner s = new Scanner(System.in);
+		System.out.println("Enter a file name to search for: ");
+		String searchName = s.nextLine();
+		System.out.println(searchName);
+        try{
+            fileReader = new FileReader(searchName+".txt");
+            bufferedReader = new BufferedReader(fileReader); 
+            String nextLine = bufferedReader.readLine();
+            while (nextLine != null){
+                System.out.println(nextLine);
+                nextLine = bufferedReader.readLine();
+                addNode(nextLine);
+            } 
+        }
+        catch (FileNotFoundException e){
+            System.out.println("File was not found.");
+        }
+        catch (IOException e){
+            System.out.println("Error occured opening or reading from the file.");
+        }
+        finally
+        {
+            if (bufferedReader != null)
+            {
+                try {
+                    bufferedReader.close();
+                }
+                catch (IOException e){
+                    System.out.println("A problem occured whilst attempting to close the file.");
+                }
+            }
+        }
     }
     
     /**

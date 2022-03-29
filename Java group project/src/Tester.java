@@ -89,6 +89,11 @@ public class Tester {
             	setTests();
                 break;
                 
+            case "6" :
+            	System.out.println("load a dic selected. \n");
+            	English.loadDic();
+                break;
+                
             case "0" :
                 System.out.println("Quiting. \n");
                 return false;
@@ -109,6 +114,7 @@ public class Tester {
 		System.out.println("3 - Delete node");
 		System.out.println("4 - Display Tree");
 		System.out.println("5 - Run preset tests");
+		System.out.println("6 - load a dic");
 		System.out.println("0 - Exit\n");	
 	}
 }
