@@ -315,28 +315,17 @@ public class Dictionary
     }
     
    /**
-    * a method to recursively navigate a given tree (or sub-tree) and save it's contents to a file
+    * Lets the user specify a file to save the contents of the dictionary to
     * @param p the node to display from
     */
-    public void saveDic(Word p) {
-    	//TODO Someone please fix this thing
+    public void userSaveDic(Word p) {
         FileOutputStream outputStream = null;
         PrintWriter printWriter = null;
-        String lineToWrite;
         try{
+        	//TODO Add scanner to allow user specified file name
             outputStream = new FileOutputStream("output.txt");
             printWriter = new PrintWriter(outputStream); 
-            if(p!=null) {
-            	{
-            			saveDic(p.getLeft()); 
-       
-            			lineToWrite=p.getWord();
-            			System.out.println(lineToWrite+" written to file.");
-            			printWriter.print(lineToWrite+"\r\n");
-      
-            			saveDic(p.getRight());	
-            	}
-            }         
+            saveDic(p, printWriter);
         }
         catch (IOException e){
             System.out.println("A problem occured opening or writing to the file");
@@ -345,6 +334,25 @@ public class Dictionary
         finally{
            if (printWriter != null)
               printWriter.close();
+        }
+    }
+    
+    /**
+    * a method to recursively navigate a given tree (or sub-tree) and save it's contents to a file
+    * @param p the node to display from
+	* @param printWriter the PrintWriter used to write to the file
+	*/
+    public void saveDic(Word p, PrintWriter printWriter) {
+    	if(p!=null) {
+        	{
+        			saveDic(p.getLeft(), printWriter); 
+   
+        			String lineToWrite=p.getWord();
+        			System.out.println(lineToWrite+" written to file.");
+        			printWriter.print(lineToWrite+"\r\n");
+  
+        			saveDic(p.getRight(), printWriter);	
+        	}
         }
     }
     
