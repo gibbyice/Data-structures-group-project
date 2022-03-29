@@ -30,7 +30,6 @@ public class Tester {
 		English.search("poggers");
 		System.out.println("\nTest adding nodes");
 		English.addNode("banana");
-		System.out.println(":)");
 		English.addNode("apple");
 		English.addNode("pomegranite");
 		English.addNode("pear");
@@ -94,6 +93,16 @@ public class Tester {
             	English.loadDic();
                 break;
                 
+            case "7" :
+            	System.out.println("Display alphabetically selected. \n");
+            	English.displayAlphabetically(English.getRoot());
+                break;
+                
+            case "8" :
+            	System.out.println("Save dictionary selected. \n");
+            	English.saveDic(English.getRoot());
+                break;
+                
             case "0" :
                 System.out.println("Quiting. \n");
                 return false;
@@ -115,6 +124,8 @@ public class Tester {
 		System.out.println("4 - Display Tree");
 		System.out.println("5 - Run preset tests");
 		System.out.println("6 - load a dic");
+		System.out.println("7 - Display alphabetically");
+		System.out.println("8 - Save dictionatry");
 		System.out.println("0 - Exit\n");	
 	}
 }

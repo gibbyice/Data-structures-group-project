@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Dictionary 
@@ -178,6 +180,25 @@ public class Dictionary
     }
     
     /**
+     * a method to recursively display a given tree (or sub-tree) 'p' in alphabetical order
+     * @param p the node to display from
+     */
+    public void displayAlphabetically(Word p)
+    {
+    	if (p != null)
+    	{
+    		// display left sub-tree of 'p'
+    			displayAlphabetically(p.getLeft());              
+               
+           	// display 'p' itself
+            	System.out.println(p.getWord());
+    	
+    		// display the right sub-tree of 'p'
+            	displayAlphabetically(p.getRight());
+    	}
+    }
+    
+    /**
      * Gets the user to input the id of a node to delete.
      */
     public void userDelete() {
@@ -290,6 +311,40 @@ public class Dictionary
                     System.out.println("A problem occured whilst attempting to close the file.");
                 }
             }
+        }
+    }
+    
+   /**
+    * a method to recursively navigate a given tree (or sub-tree) and save it's contents to a file
+    * @param p the node to display from
+    */
+    public void saveDic(Word p) {
+    	//TODO Someone please fix this thing
+        FileOutputStream outputStream = null;
+        PrintWriter printWriter = null;
+        String lineToWrite;
+        try{
+            outputStream = new FileOutputStream("output.txt");
+            printWriter = new PrintWriter(outputStream); 
+            if(p!=null) {
+            	{
+            			saveDic(p.getLeft()); 
+       
+            			lineToWrite=p.getWord();
+            			System.out.println(lineToWrite+" written to file.");
+            			printWriter.print(lineToWrite+"\r\n");
+      
+            			saveDic(p.getRight());	
+            	}
+            }         
+        }
+        catch (IOException e){
+            System.out.println("A problem occured opening or writing to the file");
+            System.out.println("/t" + e);
+        }
+        finally{
+           if (printWriter != null)
+              printWriter.close();
         }
     }
     
