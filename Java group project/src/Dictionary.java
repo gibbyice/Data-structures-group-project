@@ -266,7 +266,11 @@ public class Dictionary
             while (nextLine != null){
                 System.out.println(nextLine);
                 nextLine = bufferedReader.readLine();
-                addNode(nextLine);
+				if (nextLine != null) {
+					addNode(nextLine);
+				} else {
+					break;
+				}
             } 
         }
         catch (FileNotFoundException e){
