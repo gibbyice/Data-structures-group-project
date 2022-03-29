@@ -100,7 +100,7 @@ public class Tester {
                 
             case "8" :
             	System.out.println("Save dictionary selected. \n");
-            	English.saveDic(English.getRoot());
+            	English.userSaveDic(English.getRoot());
                 break;
                 
             case "0" :
