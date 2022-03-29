@@ -178,17 +178,18 @@ public class Dictionary
      */
     public void userDelete() {
     	Scanner s = new Scanner(System.in);
-    	int id = -1;
-    	while(id<0) {
-    		try {
-    			System.out.println("Please enter the id of the item to add:");
-    			id = s.nextInt();
-    		} catch (Exception e) {
-    			System.out.println("Please enter an integer value greater than or equal to 0.");
-    			s.next();
-    		}
-    	}
-    }
+	    String word=null;
+		while(word==null) {
+			try {
+				System.out.println("Please enter the name of the item to delete:");
+				word = s.nextLine();
+			} catch (Exception e) {
+				System.out.println("Please enter a string.");
+				s.next();
+			}
+		}
+		deleteNode(word);
+		}
     
     /**
      * A method to find the node to delete and call the correct method to remove it based on how many children it has.
@@ -198,7 +199,7 @@ public class Dictionary
     	if(root!=null) {
     		Word previous=null;
         	Word current=root;
-        	while(word.equals(current.getWord())) {
+        	while(!(word.equals(current.getWord()))) {
         		previous = current;
         		try {
         			if(word.compareTo(current.getWord())<0) {
