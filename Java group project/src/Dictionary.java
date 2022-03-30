@@ -4,12 +4,14 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.Date;
 
 public class Dictionary 
 {
     private Word root;
+	public boolean addNewWord = false;
 
     /**
      * Default constructor. Initialise fields to default values.
@@ -440,11 +442,20 @@ public class Dictionary
 	public void autoComplete() {
 		Scanner s = new Scanner(System.in);
 		String userInput;
+		String userInput2;
 		System.out.println("Please input your unfinished word.");
 		userInput = s.nextLine();
 		String[] threeWords = autoCorrectSearcher(userInput);
 		if (threeWords[0] == null) {
-			System.out.println("No autocorrect can be found.");
+			if (addNewWord) {
+				System.out.println("No autocorrect can be found, would you like to add this word to the dictionary? Y/N");
+				userInput2 = s.nextLine();
+				if(userInput2.toLowerCase().equals("y")) {
+					addNode(userInput);
+				}
+			} else {
+				System.out.println("No autocorrect can be found.");
+			}
 		} else if ((threeWords[1] == null) && (threeWords[2] != null)) {
 			System.out.println(threeWords[0] + "\t" + threeWords[2]);
 		} else if ((threeWords[1] != null) && (threeWords[2] == null)) {
