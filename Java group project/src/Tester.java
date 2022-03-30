@@ -102,6 +102,11 @@ public class Tester {
             	System.out.println("Save dictionary selected. \n");
             	English.userSaveDic(English.getRoot());
                 break;
+
+			case "9" :
+				System.out.println("Autocomplete a word. \n");
+				English.autoComplete();
+				break;
                 
             case "0" :
                 System.out.println("Quiting. \n");
@@ -125,7 +130,8 @@ public class Tester {
 		System.out.println("5 - Run preset tests");
 		System.out.println("6 - load a dic");
 		System.out.println("7 - Display alphabetically");
-		System.out.println("8 - Save dictionatry");
+		System.out.println("8 - Save dictionary");
+		System.out.println("9 - Autocomplete a word");
 		System.out.println("0 - Exit\n");	
 	}
 }
