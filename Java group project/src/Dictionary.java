@@ -49,11 +49,12 @@ public class Dictionary
      */
     public void userSearch() {
     	Scanner s = new Scanner(System.in);
-    	String userInput = "";
+    	String userInput = null;
     	while(userInput==null) {
     		try {
-    			System.out.println("Please enter the name of the item to add:");
+    			System.out.println("Please enter the name of the item to search for:");
     			userInput = s.nextLine();
+    			search(userInput);
     		} catch (Exception e) {
     			System.out.println("Please enter a string.");
     			s.next();
@@ -75,7 +76,7 @@ public class Dictionary
         			current=current.getRight();
         		}
     			if(word.equals(current.getWord())) {
-    	    		System.out.println(current.getWord());
+    	    		System.out.println(current.getWord()+" was found.");
     	    	}
         	}
     	} catch (Exception e) {
