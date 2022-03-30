@@ -422,7 +422,7 @@ public class Dictionary
 					current = current.getRight();
 				} else if (currentLetterInput == currentLetterDic) {
 					// Checks if the next character is null, if it is, it adds and returns the predicted outputs.
-					if (word.charAt(charIndex + 1) == 0) {
+					if (charIndex == (word.length()-1)) {
 						output[0] = currentWord;
 						output[1] = current.getLeft().getWord();
 						output[2] = current.getRight().getWord();
