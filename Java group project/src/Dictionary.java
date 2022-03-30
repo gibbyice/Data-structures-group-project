@@ -443,68 +443,54 @@ public class Dictionary
 		System.out.println("Please input your unfinished word.");
 		userInput = s.nextLine();
 		String[] threeWords = autoCorrectSearcher(userInput);
-		System.out.println(threeWords[0] + "\t" + threeWords[1] + "\t" + threeWords[2]);
+		if (threeWords[0] == null) {
+			System.out.println("No autocorrect can be found.");
+		} else if ((threeWords[1] == null) && (threeWords[2] != null)) {
+			System.out.println(threeWords[0] + "\t" + threeWords[2]);
+		} else if ((threeWords[1] != null) && (threeWords[2] == null)) {
+			System.out.println(threeWords[0] + "\t" + threeWords[1]);
+		} else if ((threeWords[0] != null) && (threeWords[1] == null) && (threeWords[2] == null)) {
+			System.out.println(threeWords[0]);
+		} else {
+			System.out.println(threeWords[0] + "\t" + threeWords[1] + "\t" + threeWords[2]);
+		}
 	}
 
 	public String[] autoCorrectSearcher(String word) {
 		Word current = root;
-		String currentWord = current.getWord();
-		char currentLetterDic;
-		char currentLetterInput;
-		int charIndex = 0;
+		Word previous = root;
 		String[] output = new String[3];
-		boolean doLoop = true;
-		String tempWord = currentWord;
-
-			while (doLoop) {
-				currentWord = current.getWord();
-				currentLetterInput = word.charAt(charIndex);
-				while (charIndex == (currentWord.length()-1)) {
-					current = current.getRight();
-					currentWord = current.getWord();
+		try {
+			while(!(word.equals(current.getWord()))) {
+				if(word.compareTo(current.getWord())<0) {
+					previous = current;
+					current=current.getLeft();
+				} else {
+					previous = current;
+					current=current.getRight();
 				}
-				currentLetterDic = currentWord.charAt(charIndex);
-				if (currentLetterInput < currentLetterDic) {
-					if (current.getLeft().getWord().charAt(charIndexHelper(charIndex)) != tempWord.charAt(charIndexHelper(charIndex))) {
-						output[0] = currentWord;
-						output[1] = current.getLeft().getWord();
-						output[2] = current.getRight().getWord();
-						doLoop = false;
-					} else {
-						current = current.getLeft();
-					}
-				} else if (currentLetterInput > currentLetterDic) {
-					if (current.getRight().getWord().charAt(charIndexHelper(charIndex)) != tempWord.charAt(charIndexHelper(charIndex))) {
-						output[0] = currentWord;
-						output[1] = current.getLeft().getWord();
-						output[2] = current.getRight().getWord();
-						doLoop = false;
-					} else {
-						current = current.getRight();
-					}
-				} else if (currentLetterInput == currentLetterDic) {
-					// Checks if the next character is null, if it is, it adds and returns the predicted outputs.
-					if (charIndex == (word.length()-1)) {
-						output[0] = currentWord;
-						output[1] = current.getLeft().getWord();
-						output[2] = current.getRight().getWord();
-						doLoop = false;
-					}
-					// If the character is not null, go to the next character and repeat the loop.
-					else {
-						tempWord = tempWord + currentLetterInput;
-						charIndex++;
-					}
+				if(word.equals(current.getWord())) {
+					output[0] = word;
+					return output;
 				}
 			}
-		return output;
-	}
-
-	public int charIndexHelper(int charIndex) {
-		if (charIndex < 0) {
-			return 0;
-		} else {
-			return charIndex;
+		} catch (Exception e) {
+			try {
+				output[0] = previous.getWord();
+			} catch (Exception e1) {
+				output[0] = null;
+			}
+			try {
+				output[1] = previous.getLeft().getWord();
+			} catch (Exception e2) {
+				output[1] = null;
+			}
+			try {
+				output[2] = previous.getRight().getWord();
+			} catch (Exception e3) {
+				output[2] = null;
+			}
 		}
+		return output;
 	}
 }
