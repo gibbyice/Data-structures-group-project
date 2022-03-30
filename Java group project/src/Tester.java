@@ -4,6 +4,9 @@ public class Tester {
 
     // i would assume multiple languages would be handled kinda like this, but i haven't thought about it too much so idk
     private Dictionary English = new Dictionary();
+    private Dictionary notEnglish = new Dictionary();
+    private Dictionary[] dictionaries = {English, notEnglish};
+    private int activePos = 0;
     
 	/**
 	 * @param args
@@ -16,6 +19,39 @@ public class Tester {
 		}
 	}
 	
+	/**
+	 * Allows the user to change what dictionary to run methods on
+	 */
+	public void changeActiveDic() {
+		System.out.println("Please select which dictioanry to set as active:");
+		System.out.println("1 - English");
+		System.out.println("2 - Not English");
+		Scanner s = new Scanner(System.in);
+		String userInput = s.nextLine();
+		switch(userInput)
+        {
+        	case "1" :
+        		System.out.println("English is now the active dictionary.");
+        		setActivePos(0);
+        		break;
+        		
+        	case "2" :
+        		System.out.println("Not English is now the active dictionary.");
+        		setActivePos(1);
+        		break;
+                 
+            default :
+                System.out.println("Command not recognised.\n");
+        }
+	}
+	
+	/**
+	 * Sets activePos to a new position
+	 * @param pos the position of the new active dictionary
+	 */
+	public void setActivePos(int pos) {
+		activePos = pos;
+	}
 	
 	/**
 	 * process - run out tests
@@ -65,22 +101,22 @@ public class Tester {
         {
         	case "1" :
         		System.out.println("Add node selected. \n");
-        		English.userAddNode();
+        		dictionaries[activePos].userAddNode();
         		break;
         		
         	case "2" :
         		System.out.println("Search for node Selected. \n");
-        		English.userSearch();
+        		dictionaries[activePos].userSearch();
         		break;
     
             case "3" :
             	System.out.println("Delete node selected. \n");
-            	English.userDelete();
+            	dictionaries[activePos].userDelete();
                 break;
                 
             case "4" :
             	System.out.println("Display Tree selected. \n");
-            	English.showTree();
+            	dictionaries[activePos].showTree();
                 break;
                 
             case "5" :
@@ -90,22 +126,27 @@ public class Tester {
                 
             case "6" :
             	System.out.println("load a dic selected. \n");
-            	English.loadDic();
+            	dictionaries[activePos].loadDic();
                 break;
                 
             case "7" :
             	System.out.println("Display alphabetically selected. \n");
-            	English.displayAlphabetically(English.getRoot());
+            	dictionaries[activePos].displayAlphabetically(dictionaries[activePos].getRoot());
                 break;
                 
             case "8" :
             	System.out.println("Save dictionary selected. \n");
-            	English.userSaveDic(English.getRoot());
+            	dictionaries[activePos].userSaveDic(dictionaries[activePos].getRoot());
                 break;
 
 			case "9" :
-				System.out.println("Autocomplete a word. \n");
-				English.autoComplete();
+				System.out.println("Autocomplete a word selected. \n");
+				dictionaries[activePos].autoComplete();
+				break;
+				
+			case "10" :
+				System.out.println("Change active dictionary selected. \n");
+				changeActiveDic();
 				break;
                 
             case "0" :
@@ -132,6 +173,7 @@ public class Tester {
 		System.out.println("7 - Display alphabetically");
 		System.out.println("8 - Save dictionary");
 		System.out.println("9 - Autocomplete a word");
+		System.out.println("10 - Change active dictionary");
 		System.out.println("0 - Exit\n");	
 	}
 }
