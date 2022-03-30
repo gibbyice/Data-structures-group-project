@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.Date;
 
 public class Dictionary 
 {
@@ -268,6 +269,58 @@ public class Dictionary
     	} else {
     		previous.setRight(null);
     	}
+    }
+    
+    /**
+     * Loads incomplete words into the auto complete method and prints the time elapsed, word count and the words completed per second.
+     */
+    public void loadIncompleteWords() {
+    	Date beginTime = new Date();
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        int wordCount = 0;
+        Scanner s = new Scanner(System.in);
+		System.out.println("Enter a file name to search for: ");
+		String searchName = s.nextLine();
+		System.out.println(searchName);
+        try{
+            fileReader = new FileReader(searchName+".txt");
+            bufferedReader = new BufferedReader(fileReader); 
+            String nextLine = bufferedReader.readLine();
+            while (nextLine != null){
+                System.out.println(nextLine);
+                nextLine = bufferedReader.readLine();
+				if (nextLine != null) {
+					wordCount++;
+					String[] threeWords = autoCorrectSearcher(nextLine);
+					System.out.println(threeWords[0] + "\t" + threeWords[1] + "\t" + threeWords[2]+"\n");
+				} else {
+					break;
+				}
+            } 
+        }
+        catch (FileNotFoundException e){
+            System.out.println("File was not found.");
+        }
+        catch (IOException e){
+            System.out.println("Error occured opening or reading from the file.");
+        }
+        finally
+        {
+            if (bufferedReader != null)
+            {
+                try {
+                    bufferedReader.close();
+                }
+                catch (IOException e){
+                    System.out.println("A problem occured whilst attempting to close the file.");
+                }
+            }
+        }
+        Date endTime = new Date();
+        long elapsed = (endTime.getTime() - beginTime.getTime())/1000;
+        long wordsPerSec = wordCount/elapsed;
+        System.out.println("Time elapsed: "+elapsed+ " Words pre second: "+wordsPerSec+" Word count: "+wordCount);
     }
     
     /**

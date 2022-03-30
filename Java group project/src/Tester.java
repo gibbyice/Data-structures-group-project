@@ -148,6 +148,11 @@ public class Tester {
 				System.out.println("Change active dictionary selected. \n");
 				changeActiveDic();
 				break;
+				
+			case "11" :
+				System.out.println("load incomplete words selected. \n");
+				dictionaries[activePos].loadIncompleteWords();
+				break;
                 
             case "0" :
                 System.out.println("Quiting. \n");
@@ -174,6 +179,7 @@ public class Tester {
 		System.out.println("8 - Save dictionary");
 		System.out.println("9 - Autocomplete a word");
 		System.out.println("10 - Change active dictionary");
+		System.out.println("11 - Load incomplete words from file");
 		System.out.println("0 - Exit\n");	
 	}
 }
