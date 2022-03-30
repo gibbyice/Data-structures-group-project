@@ -115,6 +115,7 @@ public class Dictionary
     	// if tree is empty, set root = node
     	if(root==null) {
     		root=node;
+    		System.out.println("'"+word+"' added as root.");
     	} else {
     		boolean found = false;
     		Word previous = null;
@@ -289,14 +290,10 @@ public class Dictionary
             String nextLine = bufferedReader.readLine();
             while (nextLine != null){
                 System.out.println(nextLine);
-                nextLine = bufferedReader.readLine();
-				if (nextLine != null) {
-					wordCount++;
-					String[] threeWords = autoCorrectSearcher(nextLine);
-					System.out.println(threeWords[0] + "\t" + threeWords[1] + "\t" + threeWords[2]+"\n");
-				} else {
-					break;
-				}
+				wordCount++;
+				String[] threeWords = autoCorrectSearcher(nextLine);
+				System.out.println(threeWords[0] + "\t" + threeWords[1] + "\t" + threeWords[2]+"\n");
+				nextLine = bufferedReader.readLine();
             } 
         }
         catch (FileNotFoundException e){
@@ -333,19 +330,13 @@ public class Dictionary
         Scanner s = new Scanner(System.in);
 		System.out.println("Enter a file name to search for: ");
 		String searchName = s.nextLine();
-		System.out.println(searchName);
         try{
             fileReader = new FileReader(searchName+".txt");
             bufferedReader = new BufferedReader(fileReader); 
             String nextLine = bufferedReader.readLine();
             while (nextLine != null){
-                System.out.println(nextLine);
-                nextLine = bufferedReader.readLine();
-				if (nextLine != null) {
-					addNode(nextLine);
-				} else {
-					break;
-				}
+				addNode(nextLine);
+				nextLine = bufferedReader.readLine();
             } 
         }
         catch (FileNotFoundException e){
