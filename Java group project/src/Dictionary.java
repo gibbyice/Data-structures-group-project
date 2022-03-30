@@ -404,22 +404,40 @@ public class Dictionary
 
 	public String[] autoCorrectSearcher(String word) {
 		Word current = root;
-		String currentWord;
+		String currentWord = current.getWord();
 		char currentLetterDic;
 		char currentLetterInput;
 		int charIndex = 0;
 		String[] output = new String[3];
 		boolean doLoop = true;
+		String tempWord = currentWord;
 
-		try {
 			while (doLoop) {
 				currentWord = current.getWord();
-				currentLetterDic = currentWord.charAt(charIndex);
 				currentLetterInput = word.charAt(charIndex);
-				if (currentLetterInput < currentLetterDic) {
-					current = current.getLeft();
-				} else if (currentLetterInput > currentLetterDic) {
+				while (charIndex == (currentWord.length()-1)) {
 					current = current.getRight();
+					currentWord = current.getWord();
+				}
+				currentLetterDic = currentWord.charAt(charIndex);
+				if (currentLetterInput < currentLetterDic) {
+					if (current.getLeft().getWord().charAt(charIndexHelper(charIndex)) != tempWord.charAt(charIndexHelper(charIndex))) {
+						output[0] = currentWord;
+						output[1] = current.getLeft().getWord();
+						output[2] = current.getRight().getWord();
+						doLoop = false;
+					} else {
+						current = current.getLeft();
+					}
+				} else if (currentLetterInput > currentLetterDic) {
+					if (current.getRight().getWord().charAt(charIndexHelper(charIndex)) != tempWord.charAt(charIndexHelper(charIndex))) {
+						output[0] = currentWord;
+						output[1] = current.getLeft().getWord();
+						output[2] = current.getRight().getWord();
+						doLoop = false;
+					} else {
+						current = current.getRight();
+					}
 				} else if (currentLetterInput == currentLetterDic) {
 					// Checks if the next character is null, if it is, it adds and returns the predicted outputs.
 					if (charIndex == (word.length()-1)) {
@@ -430,13 +448,19 @@ public class Dictionary
 					}
 					// If the character is not null, go to the next character and repeat the loop.
 					else {
+						tempWord = tempWord + currentLetterInput;
 						charIndex++;
 					}
 				}
 			}
-		} catch (Exception e) {
-			System.out.println("Error! Couldn't find any predictions for that!");
-		}
 		return output;
+	}
+
+	public int charIndexHelper(int charIndex) {
+		if (charIndex < 0) {
+			return 0;
+		} else {
+			return charIndex;
+		}
 	}
 }
