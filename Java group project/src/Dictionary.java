@@ -304,6 +304,10 @@ public class Dictionary
         }
         finally
         {
+        	Date endTime = new Date();
+            long elapsed = (endTime.getTime() - beginTime.getTime())/1000;
+            long wordsPerSec = wordCount/elapsed;
+            System.out.println("Time elapsed: "+elapsed+ " Words pre second: "+wordsPerSec+" Word count: "+wordCount);
             if (bufferedReader != null)
             {
                 try {
@@ -314,10 +318,6 @@ public class Dictionary
                 }
             }
         }
-        Date endTime = new Date();
-        long elapsed = (endTime.getTime() - beginTime.getTime())/1000;
-        long wordsPerSec = wordCount/elapsed;
-        System.out.println("Time elapsed: "+elapsed+ " Words pre second: "+wordsPerSec+" Word count: "+wordCount);
     }
     
     /**
