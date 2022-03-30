@@ -391,4 +391,51 @@ public class Dictionary
     		}
     	}
     }
+
+	public void autoComplete() {
+		Scanner s = new Scanner(System.in);
+		String userInput;
+		System.out.println("Please input your unfinished word.");
+		userInput = s.nextLine();
+		String[] threeWords = autoCorrectSearcher(userInput);
+		System.out.println(threeWords[0] + "\t" + threeWords[1] + "\t" + threeWords[2]);
+	}
+
+	public String[] autoCorrectSearcher(String word) {
+		Word current = root;
+		String currentWord;
+		char currentLetterDic;
+		char currentLetterInput;
+		int charIndex = 0;
+		String[] output = new String[3];
+		boolean doLoop = true;
+
+		try {
+			while (doLoop) {
+				currentWord = current.getWord();
+				currentLetterDic = currentWord.charAt(charIndex);
+				currentLetterInput = word.charAt(charIndex);
+				if (currentLetterInput < currentLetterDic) {
+					current = current.getLeft();
+				} else if (currentLetterInput > currentLetterDic) {
+					current = current.getRight();
+				} else if (currentLetterInput == currentLetterDic) {
+					// Checks if the next character is null, if it is, it adds and returns the predicted outputs.
+					if (word.charAt(charIndex + 1) == 0) {
+						output[0] = currentWord;
+						output[1] = current.getLeft().getWord();
+						output[2] = current.getRight().getWord();
+						doLoop = false;
+					}
+					// If the character is not null, go to the next character and repeat the loop.
+					else {
+						charIndex++;
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Error! Couldn't find any predictions for that!");
+		}
+		return output;
+	}
 }
